@@ -1,16 +1,16 @@
 {
-  "files": ["src/server"],
-  "include": ["**/*.ts"],
+  "files": ["src/server/main.ts"],
   "exclude": ["__tests__/*/test.ts"],
   "compilerOptions": {
     "skipLibCheck": true,
     "inlineSourceMap": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "target": "ES6",
-    "module": "CommonJS"
+    "module": "CommonJS",
+    "outDir": "./dist"
   }
 }
