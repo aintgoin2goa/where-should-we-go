@@ -1,0 +1,14 @@
+{
+  "name": "where-should-we-go",
+  "version": "1.0.0",
+  "repository": "git@github.com:aintgoin2goa/where-should-we-go.git",
+  "author": "Paul Wilson <paul.wilson@ktech.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "typescript": "^3.8.3"
+  }
+}
