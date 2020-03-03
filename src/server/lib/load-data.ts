@@ -1,11 +1,5 @@
 import * as fetch from "make-fetch-happen";
 
-export interface UserData {
-  name: string;
-  wont_eat: string[];
-  drinks: string[];
-}
-
 const loadData = async <T>(url: string): Promise<T> => {
   const response = await fetch(url, {
     retry: 3

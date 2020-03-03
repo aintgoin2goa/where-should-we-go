@@ -1,5 +1,5 @@
-import loadData from "../lib/load-data";
-import Users, { CanVisitResult } from "./users";
+import _loadData from "../lib/load-data";
+import Team, { CanVisitResult } from "./team";
 
 export interface Venue {
   name: string;
@@ -13,15 +13,20 @@ export interface VenueVisitableResult extends CanVisitResult {
 
 export default class Venues {
   private venues: Venue[];
+  private loadData: typeof _loadData;
 
-  async load(url: string) {
-    this.venues = await loadData<Venue[]>(url);
+  constructor(loadData = _loadData) {
+    this.loadData = loadData;
   }
 
-  testVenues(users: Users): VenueVisitableResult[] {
+  async load(url: string) {
+    this.venues = await this.loadData<Venue[]>(url);
+  }
+
+  testVenues(team: Team): VenueVisitableResult[] {
     return this.venues.map(venue => {
       return {
-        ...users.canVisit(venue),
+        ...team.canVisit(venue),
         name: venue.name
       };
     });
