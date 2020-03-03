@@ -5,7 +5,7 @@ import * as finalhandler from "finalhandler";
 import { spawn, ChildProcessWithoutNullStreams } from "child_process";
 import * as _waitForPort from "wait-for-port";
 import fetch from "node-fetch";
-import { promisify, inspect } from "util";
+import { promisify } from "util";
 import { resolve as resolvePath } from "path";
 
 const waitForPort = promisify(_waitForPort);
