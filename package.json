@@ -7,6 +7,7 @@
   "scripts": {
     "test": "jest",
     "test:int": "jest test/",
+    "test:unit": "jest __tests__/",
     "start": "node -r ts-node/register src/server/main.ts"
   },
   "devDependencies": {

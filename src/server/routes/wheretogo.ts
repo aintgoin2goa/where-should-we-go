@@ -1,5 +1,5 @@
 import * as Router from "koa-router";
-import Users from "../models/users";
+import Team from "../models/team";
 import Venues from "../models/venues";
 import { Context } from "koa";
 
@@ -15,27 +15,29 @@ interface WheretoGoResponse {
   placesToAvoid: PlaceToAvoid[];
 }
 
-const whereToGo = (users: Users, venues: Venues): Router => {
-  router.get("/wheretogo", async (ctx: Context) => {
-    const venuesResult = venues.testVenues(users);
-    const response: WheretoGoResponse = {
-      placesToGo: [],
-      placesToAvoid: []
-    };
-    for (const venue of venuesResult) {
-      if (venue.canVisit) {
-        response.placesToGo.push(venue.name);
-      } else {
-        response.placesToAvoid.push({
-          name: venue.name,
-          reasons: venue.reasons
-        });
-      }
+const whereToGo = (team: Team, venues: Venues) => async (ctx: Context) => {
+  const venuesResult = venues.testVenues(team);
+  const response: WheretoGoResponse = {
+    placesToGo: [],
+    placesToAvoid: []
+  };
+  for (const venue of venuesResult) {
+    if (venue.canVisit) {
+      response.placesToGo.push(venue.name);
+    } else {
+      response.placesToAvoid.push({
+        name: venue.name,
+        reasons: venue.reasons
+      });
     }
+  }
 
-    ctx.body = response;
-  });
-  return router;
+  ctx.body = response;
 };
 
-export default whereToGo;
+const whereToGoRoutes = (team: Team, venues: Venues) => {
+  router.get("/wheretogo", whereToGo(team, venues));
+  return router.routes();
+};
+
+export default whereToGoRoutes;

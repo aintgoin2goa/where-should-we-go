@@ -2,9 +2,10 @@ import * as App from "koa";
 import * as Router from "koa-router";
 import * as dotenv from "dotenv";
 
-import Users from "./models/users";
+import Team from "./models/team";
 import Venues from "./models/venues";
-import whereToGo from "./routes/wheretogo";
+import whereToGoRoutes from "./routes/wheretogo";
+import statusRoutes from "./routes/status";
 
 dotenv.config();
 
@@ -13,19 +14,12 @@ const { USERS_URL, VENUES_URL } = process.env;
 
 const app = new App();
 
-const router = new Router();
-
-router.get("/status", async ctx => {
-  ctx.body = "OK";
-});
-
 const start = async () => {
-  const users = new Users();
+  const team = new Team();
   const venues = new Venues();
-  await Promise.all([venues.load(VENUES_URL), users.load(USERS_URL)]);
-  const whereToGoRouter = whereToGo(users, venues);
-  app.use(router.routes());
-  app.use(whereToGoRouter.routes());
+  await Promise.all([venues.load(VENUES_URL), team.load(USERS_URL)]);
+  app.use(statusRoutes());
+  app.use(whereToGoRoutes(team, venues));
   app.listen(PORT);
 };
 
